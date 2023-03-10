@@ -9,7 +9,7 @@ Run and Capture Shell Command Output
   Should work with Vim9 (compiled with ``HUGE`` features).
 
 
-I always wanted a simpler way to run an arbitrary shell commands with the output
+I always wanted a simpler way to run an arbitrary shell command with the output
 being captured into some throwaway buffer. Mostly for the simple scripting
 (press a button, script is executed and the output is immediately visible).
 
