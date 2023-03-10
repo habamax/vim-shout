@@ -70,7 +70,7 @@ Examples of User Commands
 
 ``:Todo``, search for all TODOs, FIXMEs and XXXs using ripgrep::
 
-  command! -nargs=0 Todo Sh! rg -nS --column "\b(TODO|FIXME|XXX):" .
+  command! Todo Sh! rg -nS --column "\b(TODO|FIXME|XXX):" .
 
 
 Examples of User Mappings
