@@ -174,8 +174,5 @@ enddef
 # shell commands
 # files/directories with shell commands and |, >, && and ||
 export def Complete(ArgLead: string, CmdLine: string, CursorPos: number): string
-    if empty(ArgLead)
-        return ''
-    endif
-    return getcompletion(ArgLead, 'shellcmd')->join("\n")
+    return getcompletion(ArgLead, 'file')->join("\n")
 enddef
