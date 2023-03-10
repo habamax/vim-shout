@@ -6,7 +6,7 @@ Run and Capture Shell Command Output
 
 .. note::
 
-  Should work with Vim9 (compiled with ``HUGE`` featurs).
+  Should work with Vim9 (compiled with ``HUGE`` features).
 
 
 I always wanted a simpler way to run an arbitrary shell commands with the output
