@@ -1,8 +1,5 @@
 vim9script
 
-# g:shout_main_win_mode is "botright vertical" and could be one of:
-# "", "vertical", "topleft", "botright", "botright vertical" etc
-
 
 var shout_job: job
 
