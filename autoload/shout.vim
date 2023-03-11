@@ -74,16 +74,22 @@ export def CaptureOutput(command: string, follow: bool = false)
             if !bufexists(bufnr)
                 return
             endif
-            var msg = [""]
-            msg += ["Exit code: " .. job_info(shout_job).exitval]
             var winid = bufwinid(bufnr)
-            appendbufline(bufnr, line('$', winid), msg)
+            var exit_code = job_info(shout_job).exitval
+            if get(g:, "shout_print_exit_code", true)
+                var msg = [""]
+                msg += ["Exit code: " .. exit_code]
+                appendbufline(bufnr, line('$', winid), msg)
+            endif
             if follow
                 win_execute(winid, "normal! G")
             endif
+            setbufvar(bufnr, "shout_exit_code", $"{exit_code}")
             win_execute(winid, "setl undolevels&")
         }
     })
+
+    b:shout_cmd = command
 
     if follow
         normal! G

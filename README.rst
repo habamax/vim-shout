@@ -91,8 +91,8 @@ Build and run rust project (put into ``~/.vim/after/ftplugin/rust.vim``)::
   nnoremap <buffer> <F7> <scriptcmd>Sh cargo build --release<cr>
 
 
-Options
-=======
+Options, Variables
+==================
 
 ``g:shout_main_win_mode``
   Controls the way ``[shout]`` buffer is opened, by default it is ``"botright
@@ -103,3 +103,15 @@ Options
   - ``"topleft"`` — split on top, take full vim width;
   - ``"botright"`` — split on bottom, take full vim width
   - ``"botright vertical"`` — default, split on right, take full vim height.
+
+``g:shout_print_exit_code``
+  Add empty line followed by "Exit code: X" line to the end of ``[shout]`` buffer if set to ``true``:
+  Default is ``true``.
+
+``b:shout_exit_code``
+  Buffer local varibale. Contains exit code of the latest executed command.
+  Could be useful in custom statuslines.
+
+``b:shout_cmd``
+  Buffer local variable. Contains latest executed command.
+  Could be useful in custom statuslines.
