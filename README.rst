@@ -95,8 +95,8 @@ Options
 =======
 
 ``g:shout_main_win_mode``
-  Controls the way ``[shout]`` buffer is opened, by default it is opened o
-  is ``"botright vertical"`` and could be one of:
+  Controls the way ``[shout]`` buffer is opened, by default it is ``"botright
+  vertical"`` and could be one of:
 
   - ``""`` — default split;
   - ``"vertical"`` — vertical split;
