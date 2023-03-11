@@ -173,6 +173,40 @@ export def Kill()
 enddef
 
 
+export def NextError()
+    # Search for python error first
+    var res = search('^\s*File ".\{-}", line \d\+,', 'W')
+    if res == 0
+        res = search('^.\{-}:\d\+\(:\d\+:\?\)\?', 'W')
+    endif
+enddef
+
+
+export def FirstError()
+    :2
+    NextError()
+enddef
+
+
+export def PrevError(accept_at_curpos: bool = false)
+    # Search for python error first
+    var res = search('^\s*File ".\{-}", line \d\+,', 'bW')
+    if res == 0
+        res = search('^.\{-}:\d\+\(:\d\+:\?\)\?', 'bW')
+    endif
+enddef
+
+
+export def LastError()
+    :$
+    if getline('$') =~ "^Exit code: .*$"
+        PrevError()
+    else
+        PrevError(true)
+    endif
+enddef
+
+
 # TODO: think of a proper command completion
 # shell commands
 # files/directories with shell commands and |, >, && and ||

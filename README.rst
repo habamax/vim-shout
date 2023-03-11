@@ -36,7 +36,19 @@ In a ``[shout]`` buffer:
   Open file under cursor in a new tabpage.
 
 :kbd:`CTRL-C`
-  Kill the shell command
+  Kill the shell command.
+
+:kbd:`]]`
+  Goto next error.
+
+:kbd:`[[`
+  Goto previous error.
+
+:kbd:`[{`
+  Goto first error.
+
+:kbd:`]}`
+  Goto last error.
 
 
 Commands
