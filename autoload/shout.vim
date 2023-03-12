@@ -97,7 +97,9 @@ enddef
 
 
 export def OpenFile(mod: string = "")
-    exe "silent lcd" b:shout_cwd
+    if exists("b:shout_cwd")
+        exe "silent lcd" b:shout_cwd
+    endif
 
 
     # re-run the command if on line 1
