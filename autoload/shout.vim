@@ -45,6 +45,8 @@ export def CaptureOutput(command: string, follow: bool = false)
     var cwd = getcwd()
     var bufnr = PrepareBuffer(cwd)
 
+    setbufvar(bufnr, "shout_exit_code", "")
+
     setbufline(bufnr, 1, $"$ {command}")
     setbufline(bufnr, 2, "")
 
