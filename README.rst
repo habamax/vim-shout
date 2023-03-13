@@ -103,6 +103,27 @@ Build and run rust project (put into ``~/.vim/after/ftplugin/rust.vim``)::
   nnoremap <buffer> <F7> <scriptcmd>Sh cargo build --release<cr>
 
 
+Build and run a single c-file without ``Makefile`` or project with ``Makefile``
+(put into ``~/.vim/after/ftplugin/c.vim``)::
+
+  vim9script
+
+  def Make()
+      if filereadable("Makefile")
+          Sh make
+      else
+          var fname = expand("%:p:r")
+          exe $"Sh make {fname} && chmod +x {fname} && {fname}"
+      endif
+  enddef
+
+  nnoremap <buffer><F5> <scriptcmd>Make()<cr>
+
+
+.. image:: https://asciinema.org/a/zEL1ZuIeLLzykrjCsmMowA0Oo.svg
+  :target: https://asciinema.org/a/zEL1ZuIeLLzykrjCsmMowA0Oo
+
+
 Options, Variables
 ==================
 
