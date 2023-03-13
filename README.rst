@@ -120,8 +120,8 @@ Build and run a single c-file without ``Makefile`` or project with ``Makefile``
   nnoremap <buffer><F5> <scriptcmd>Make()<cr>
 
 
-.. image:: https://asciinema.org/a/zEL1ZuIeLLzykrjCsmMowA0Oo.svg
-  :target: https://asciinema.org/a/zEL1ZuIeLLzykrjCsmMowA0Oo
+.. image:: https://asciinema.org/a/566982.svg
+  :target: https://asciinema.org/a/566982
 
 
 Options, Variables
