@@ -24,6 +24,9 @@ syn match shoutWarning "\c^\s*warning:\ze " nextgroup=shoutMsg
 syn match shoutSpecialInfo '^\s\+Compiling\|Finished\|Running\s\+' nextgroup=shoutMsg
 syn match shoutMsg ".*$" contained
 
+syn match shoutTexWarning '^Underfull \\[hv]box (badness \d\+).*$'
+syn match shoutTexError '^\s*==> .* <==$'
+
 syn match shoutTodo "\<\(TODO\|FIXME\|XXX\):"
 
 hi def link shoutCargoPath String
@@ -42,6 +45,9 @@ hi def link shoutSpecialInfo PreProc
 
 hi def link shoutExitCodeNoErr Comment
 hi def link shoutExitCodeErr WarningMsg
+
+hi def link shoutTexWarning WarningMsg
+hi def link shoutTexError ErrorMsg
 
 hi def link shoutTodo Todo
 
