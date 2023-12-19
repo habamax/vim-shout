@@ -13,6 +13,7 @@ b:undo_ftplugin ..= '| exe "nunmap <buffer> ]]"'
 b:undo_ftplugin ..= '| exe "nunmap <buffer> [["'
 b:undo_ftplugin ..= '| exe "nunmap <buffer> ]}"'
 b:undo_ftplugin ..= '| exe "nunmap <buffer> [{"'
+b:undo_ftplugin ..= '| exe "nunmap <buffer> gq"'
 
 import autoload 'shout.vim'
 
@@ -23,3 +24,4 @@ nnoremap <buffer> ]] <scriptcmd>shout.NextError()<cr>
 nnoremap <buffer> [[ <scriptcmd>shout.PrevError()<cr>
 nnoremap <buffer> [{ <scriptcmd>shout.FirstError()<cr>
 nnoremap <buffer> ]} <scriptcmd>shout.LastError()<cr>
+nnoremap <buffer> gq <C-w>c
