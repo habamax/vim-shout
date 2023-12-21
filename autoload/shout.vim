@@ -209,14 +209,3 @@ export def LastError()
         PrevError(true)
     endif
 enddef
-
-
-# TODO: think of a proper command completion
-# shell commands
-# files/directories with shell commands and |, >, && and ||
-export def Complete(ArgLead: string, _CmdLine: string, _CursorPos: number): string
-    # I could have used -complete=file in command definition but it strips \ in
-    # linux and doesn't do it in windows
-    # https://github.com/vim/vim/issues/12121
-    return getcompletion(ArgLead, 'file')->join("\n")
-enddef
