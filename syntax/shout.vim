@@ -23,6 +23,9 @@ syn match shoutWarning "\c^\s*warning:\ze " nextgroup=shoutMsg
 syn match shoutSpecialInfo '^\s\+Compiling\|Finished\|Running\s\+' nextgroup=shoutMsg
 syn match shoutMsg ".*$" contained
 
+# erlang escript
+syn region shoutError matchgroup=shoutError start="^escript:" matchgroup=shoutMsg end="errors.$" contains=shoutMsg oneline
+
 syn match shoutTexWarning '^Underfull \\[hv]box (badness \d\+).*$'
 syn match shoutTexError '^\s*==> .* <==$'
 
