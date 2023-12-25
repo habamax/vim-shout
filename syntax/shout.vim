@@ -4,8 +4,7 @@ if exists("b:current_syntax")
     finish
 endif
 
-syn match shoutCmd "\%^.*$" contains=shoutCmdPrompt transparent
-syn match shoutCmdPrompt "^\$" contained
+syn match shoutCmdPrompt "\%^\$"
 syn match shoutExitCodeErr "^Exit code: .*\%$"
 syn match shoutExitCodeNoErr "^Exit code: 0\%$"
 
