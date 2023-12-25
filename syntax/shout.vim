@@ -4,7 +4,7 @@ if exists("b:current_syntax")
     finish
 endif
 
-syn match shoutCmd "\%^.*$" contains=shoutCmdPrompt
+syn match shoutCmd "\%^.*$" contains=shoutCmdPrompt transparent
 syn match shoutCmdPrompt "^\$" contained
 syn match shoutExitCodeErr "^Exit code: .*\%$"
 syn match shoutExitCodeNoErr "^Exit code: 0\%$"
@@ -31,8 +31,7 @@ syn match shoutTodo "\<\(TODO\|FIXME\|XXX\):"
 
 hi def link shoutCargoPath String
 hi def link shoutCargoPathNr Constant
-hi def link shoutCmd Statement
-hi def link shoutCmdPrompt Special
+hi def link shoutCmdPrompt Statement
 hi def link shoutGrepPath String
 hi def link shoutGrepPathNr Constant
 hi def link shoutPythonPath String
