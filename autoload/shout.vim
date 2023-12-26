@@ -124,6 +124,11 @@ export def OpenFile(mod: string = "")
     # python
     var fname = getline('.')->matchlist('^\s\+File "\(.\{-}\)", line \(\d\+\)')
 
+    # erlang escript
+    if empty(fname)
+        fname = getline('.')->matchlist('^\s\+in function\s\+.\{-}(\(.\{-}\), line \(\d\+\))')
+    endif
+
     # rust
     if empty(fname)
         fname = getline('.')->matchlist('^\s\+--> \(.\{-}\):\(\d\+\):\(\d\+\)')
@@ -178,11 +183,11 @@ enddef
 
 
 export def NextError()
-    # Search for python error first
-    var res = search('^\s*File ".\{-}", line \d\+,', 'W')
-    if res == 0
-        res = search('^.\{-}:\d\+\(:\d\+:\?\)\?', 'W')
-    endif
+    # Search for python error
+    var rxError = '^.\{-}:\d\+\(:\d\+:\?\)\?'
+    var rxPyError = '^\s*File ".\{-}", line \d\+,'
+    var rxErlEscriptError = '^\s\+in function\s\+.\{-}(.\{-}, line \d\+)'
+    search($'\({rxError}\)\|\({rxPyError}\)\|\({rxErlEscriptError}\)', 'W')
 enddef
 
 
@@ -193,11 +198,10 @@ enddef
 
 
 export def PrevError(accept_at_curpos: bool = false)
-    # Search for python error first
-    var res = search('^\s*File ".\{-}", line \d\+,', 'bW')
-    if res == 0
-        res = search('^.\{-}:\d\+\(:\d\+:\?\)\?', 'bW')
-    endif
+    var rxError = '^.\{-}:\d\+\(:\d\+:\?\)\?'
+    var rxPyError = '^\s*File ".\{-}", line \d\+,'
+    var rxErlEscriptError = '^\s\+in function\s\+.\{-}(.\{-}, line \d\+)'
+    search($'\({rxError}\)\|\({rxPyError}\)\|\({rxErlEscriptError}\)', 'bW')
 enddef
 
 

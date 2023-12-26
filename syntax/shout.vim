@@ -25,15 +25,22 @@ syn match shoutMsg ".*$" contained
 
 # erlang escript
 syn region shoutError matchgroup=shoutError start="^escript:" matchgroup=shoutMsg end="errors.$" contains=shoutMsg oneline
+syn region shoutError matchgroup=shoutError start="^escript: exception error:" end="$" contains=shoutMsg oneline keepend
+syn match shoutLocation '^\s\+in function\s\+.\{-}(.\{-}, line \d\+)' contains=shoutPath,shoutNr
+syn match shoutPath '(\zs.\{-}\ze, ' contained
+syn match shoutNr "line \zs\d\+" contained
 
 syn match shoutTexWarning '^Underfull \\[hv]box (badness \d\+).*$'
 syn match shoutTexError '^\s*==> .* <==$'
 
 syn match shoutTodo "\<\(TODO\|FIXME\|XXX\):"
 
+hi def link shoutCmdPrompt Statement
+hi def link shoutPath String
+hi def link shoutNr Constant
+
 hi def link shoutCargoPath String
 hi def link shoutCargoPathNr Constant
-hi def link shoutCmdPrompt Statement
 hi def link shoutGrepPath String
 hi def link shoutGrepPathNr Constant
 hi def link shoutPythonPath String
