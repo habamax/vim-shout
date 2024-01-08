@@ -1,14 +1,28 @@
 vim9script
 
+const W_THRESHOLD = 160
+
 var shout_job: job
 
-def SideMode(): string
-    var result = "botright"
+def Vertical(): string
+    var result = ""
     # if the overall vim width is too narrow or
     # there are >=2 vertical windows, split below
-    if &columns >= 160 && winlayout()[0] != 'row'
-        result ..= " vertical"
+    if &columns >= W_THRESHOLD && winlayout()[0] != 'row'
+        result ..= "vertical"
     endif
+    return result
+enddef
+
+def FindOtherWin(): number
+    var result = -1
+    var winid = win_getid()
+    for wnd in range(1, winnr('$'))
+        if win_getid(wnd) != winid
+            result = win_getid(wnd)
+            break
+        endif
+    endfor
     return result
 enddef
 
@@ -25,9 +39,11 @@ def PrepareBuffer(shell_cwd: string): number
     endif
 
     var windows = win_findbuf(bufnr)
+    var initial_winid = win_getid()
 
     if windows->len() == 0
-        exe SideMode() "sbuffer" bufnr
+        exe "botright" Vertical() "sbuffer" bufnr
+        b:shout_initial_winid = initial_winid
         setl bufhidden=hide
         setl buftype=nofile
         setl buflisted
@@ -102,7 +118,7 @@ export def CaptureOutput(command: string, follow: bool = false)
     endif
 enddef
 
-export def OpenFile(mod: string = "")
+export def OpenFile()
     if exists("b:shout_cwd")
         exe "silent lcd" b:shout_cwd
     endif
@@ -155,13 +171,24 @@ export def OpenFile(mod: string = "")
 
     if fname->len() > 0 && filereadable(fname[1])
         try
-            # goto opened file if it is visible
-            # split otherwise
+            var should_split = false
             var buffers = getbufinfo()->filter((_, v) => v.name == fnamemodify(fname[1], ":p"))
+            # goto opened file if it is visible
             if len(buffers) > 0 && len(buffers[0].windows) > 0
                 win_gotoid(buffers[0].windows[0])
+            # goto first non shout window otherwise
+            elseif win_gotoid(FindOtherWin())
+                if !&hidden && &modified
+                    should_split = true
+                endif
             else
-                exe mod "split" fname[1]
+                should_split = true
+            endif
+
+            if should_split
+                exe Vertical() "split" fname[1]
+            else
+                exe "edit" fname[1]
             endif
 
             if !empty(fname[2])
