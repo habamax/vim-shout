@@ -1,8 +1,16 @@
 vim9script
 
-
 var shout_job: job
 
+def SideMode(): string
+    var result = "botright vertical"
+    # if the overall vim width is too narrow or
+    # there are >=2 vertical windows, split below
+    if &columns < 160 || winlayout()[0] == 'row'
+        result = "botright"
+    endif
+    return result
+enddef
 
 def PrepareBuffer(shell_cwd: string): number
     var bufname = $'{shell_cwd}/[shout]'
@@ -19,7 +27,7 @@ def PrepareBuffer(shell_cwd: string): number
     var windows = win_findbuf(bufnr)
 
     if windows->len() == 0
-        exe get(g:, "shout_main_win_mode", "botright vertical") "sbuffer" bufnr
+        exe SideMode() "sbuffer" bufnr
         setl bufhidden=hide
         setl buftype=nofile
         setl buflisted
@@ -39,7 +47,6 @@ def PrepareBuffer(shell_cwd: string): number
 
     return bufnr
 enddef
-
 
 export def CaptureOutput(command: string, follow: bool = false)
     var cwd = getcwd()
@@ -95,12 +102,10 @@ export def CaptureOutput(command: string, follow: bool = false)
     endif
 enddef
 
-
 export def OpenFile(mod: string = "")
     if exists("b:shout_cwd")
         exe "silent lcd" b:shout_cwd
     endif
-
 
     # re-run the command if on line 1
     if line('.') == 1
@@ -112,7 +117,6 @@ export def OpenFile(mod: string = "")
         endif
         return
     endif
-
 
     # Windows has : in `isfname` thus for ./filename:20:10: gf can't find filename cause
     # it sees filename:20:10: instead of just filename
@@ -174,13 +178,11 @@ export def OpenFile(mod: string = "")
     endif
 enddef
 
-
 export def Kill()
     if shout_job != null
         job_stop(shout_job)
     endif
 enddef
-
 
 export def NextError()
     # Search for python error
@@ -190,12 +192,10 @@ export def NextError()
     search($'\({rxError}\)\|\({rxPyError}\)\|\({rxErlEscriptError}\)', 'W')
 enddef
 
-
 export def FirstError()
     :2
     NextError()
 enddef
-
 
 export def PrevError(accept_at_curpos: bool = false)
     var rxError = '^.\{-}:\d\+\(:\d\+:\?\)\?'
@@ -203,7 +203,6 @@ export def PrevError(accept_at_curpos: bool = false)
     var rxErlEscriptError = '^\s\+in function\s\+.\{-}(.\{-}, line \d\+)'
     search($'\({rxError}\)\|\({rxPyError}\)\|\({rxErlEscriptError}\)', 'bW')
 enddef
-
 
 export def LastError()
     :$

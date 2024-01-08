@@ -127,16 +127,6 @@ Build and run a single c-file without ``Makefile`` or project with ``Makefile``
 Options, Variables
 ==================
 
-``g:shout_main_win_mode``
-  Controls the way ``[shout]`` buffer is opened, by default it is ``"botright
-  vertical"`` and could be one of:
-
-  - ``""`` — default split;
-  - ``"vertical"`` — vertical split;
-  - ``"topleft"`` — split on top, take full vim width;
-  - ``"botright"`` — split on bottom, take full vim width
-  - ``"botright vertical"`` — default, split on right, take full vim height.
-
 ``g:shout_print_exit_code``
   Add empty line followed by "Exit code: X" line to the end of ``[shout]`` buffer if set to ``true``:
   Default is ``true``.
