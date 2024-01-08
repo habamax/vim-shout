@@ -26,6 +26,16 @@ def FindOtherWin(): number
     return result
 enddef
 
+def ShoutWinId(): number
+    var buffers = getbufinfo()->filter((_, v) => fnamemodify(v.name, ":t") =~ '.*\[shout\]$')
+    for shbuf in buffers
+        if len(shbuf.windows) > 0
+            return shbuf.windows[0]
+        endif
+    endfor
+    return -1
+enddef
+
 def PrepareBuffer(shell_cwd: string): number
     var bufname = $'{shell_cwd}/[shout]'
     var buffers = getbufinfo()->filter((_, v) => fnamemodify(v.name, ":t") == bufname)
@@ -237,5 +247,29 @@ export def LastError()
         PrevError()
     else
         PrevError(true)
+    endif
+enddef
+
+export def NextErrorJump()
+    if win_gotoid(ShoutWinId())
+       :exe "normal ]]\<CR>"
+    endif
+enddef
+
+export def FirstErrorJump()
+    if win_gotoid(ShoutWinId())
+       :exe "normal [{\<CR>"
+    endif
+enddef
+
+export def PrevErrorJump()
+    if win_gotoid(ShoutWinId())
+       :exe "normal [[\<CR>"
+    endif
+enddef
+
+export def LastErrorJump()
+    if win_gotoid(ShoutWinId())
+       :exe "normal ]}\<CR>"
     endif
 enddef
