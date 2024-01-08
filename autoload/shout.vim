@@ -3,11 +3,11 @@ vim9script
 var shout_job: job
 
 def SideMode(): string
-    var result = "botright vertical"
+    var result = "botright"
     # if the overall vim width is too narrow or
     # there are >=2 vertical windows, split below
-    if &columns < 160 || winlayout()[0] == 'row'
-        result = "botright"
+    if &columns >= 160 && winlayout()[0] != 'row'
+        result ..= " vertical"
     endif
     return result
 enddef
