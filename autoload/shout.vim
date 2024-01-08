@@ -54,12 +54,7 @@ def PrepareBuffer(shell_cwd: string): number
     if windows->len() == 0
         exe "botright" Vertical() "sbuffer" bufnr
         b:shout_initial_winid = initial_winid
-        setl bufhidden=hide
-        setl buftype=nofile
-        setl buflisted
         setl filetype=shout
-        setl noswapfile
-        setl noundofile
     else
         win_gotoid(windows[0])
     endif

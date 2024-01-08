@@ -6,7 +6,15 @@ endif
 
 b:did_ftplugin = 1
 
-b:undo_ftplugin = 'exe "nunmap <buffer> <cr>"'
+setl cursorline
+setl bufhidden=hide
+setl buftype=nofile
+setl buflisted
+setl noswapfile
+setl noundofile
+
+b:undo_ftplugin = 'setl cursorline< bufhidden< buftype< buflisted< swapfile< undofile<'
+b:undo_ftplugin ..= '| exe "nunmap <buffer> <cr>"'
 b:undo_ftplugin ..= '| exe "nunmap <buffer> <C-c>"'
 b:undo_ftplugin ..= '| exe "nunmap <buffer> ]]"'
 b:undo_ftplugin ..= '| exe "nunmap <buffer> [["'
