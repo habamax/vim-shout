@@ -71,7 +71,7 @@ enddef
 
 export def CaptureOutput(command: string, follow: bool = false)
     var cwd = getcwd()
-    var bufnr = PrepareBuffer(cwd)
+    var bufnr = PrepareBuffer(cwd->substitute('#', '\\&', 'g'))
 
     setbufvar(bufnr, "shout_exit_code", "")
 
@@ -179,7 +179,6 @@ export def OpenFile()
         try
             var should_split = false
             var buffers = getbufinfo()->filter((_, v) => v.name == fnamemodify(fname[1], ":p"))
-            # escape #, otherwise :edit will fail
             fname[1] = fname[1]->substitute('#', '\\&', 'g')
             # goto opened file if it is visible
             if len(buffers) > 0 && len(buffers[0].windows) > 0
