@@ -179,6 +179,8 @@ export def OpenFile()
         try
             var should_split = false
             var buffers = getbufinfo()->filter((_, v) => v.name == fnamemodify(fname[1], ":p"))
+            # escape #, otherwise :edit will fail
+            fname[1] = fname[1]->substitute('#', '\\&', 'g')
             # goto opened file if it is visible
             if len(buffers) > 0 && len(buffers[0].windows) > 0
                 win_gotoid(buffers[0].windows[0])
@@ -190,6 +192,8 @@ export def OpenFile()
             else
                 should_split = true
             endif
+
+            exe $"lcd {shout_cwd}"
 
             if should_split
                 exe Vertical() "split" fname[1]
