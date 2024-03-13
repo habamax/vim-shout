@@ -124,7 +124,8 @@ export def CaptureOutput(command: string, follow: bool = false)
 enddef
 
 export def OpenFile()
-    if exists("b:shout_cwd")
+    var shout_cwd = get(b:, "shout_cwd", "")
+    if !empty(shout_cwd)
         exe "silent lcd" b:shout_cwd
     endif
 
