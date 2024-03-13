@@ -27,7 +27,7 @@ def FindOtherWin(): number
 enddef
 
 def ShoutWinId(): number
-    var buffers = getbufinfo()->filter((_, v) => fnamemodify(v.name, ":t") =~ '.*\[shout\]$')
+    var buffers = getbufinfo()->filter((_, v) => fnamemodify(v.name, ":t") =~ '^\[shout\]$')
     for shbuf in buffers
         if len(shbuf.windows) > 0
             return shbuf.windows[0]
@@ -37,7 +37,7 @@ def ShoutWinId(): number
 enddef
 
 def PrepareBuffer(shell_cwd: string): number
-    var bufname = $'{shell_cwd}/[shout]'
+    var bufname = '[shout]'
     var buffers = getbufinfo()->filter((_, v) => fnamemodify(v.name, ":t") == bufname)
 
     var bufnr = -1
