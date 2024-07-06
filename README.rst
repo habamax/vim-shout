@@ -73,6 +73,9 @@ Commands
 
     :Sh! rg -nS --column "\b(TODO|FIXME|XXX):" .
 
+``:Shut``
+  Close shout window.
+
 
 Examples of User Commands
 =========================

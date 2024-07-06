@@ -220,6 +220,15 @@ export def Kill()
     endif
 enddef
 
+export def CloseWindow()
+    var winid = ShoutWinId()
+    if winid == -1
+        return
+    endif
+    var winnr = getwininfo(winid)[0].winnr
+    exe $":{winnr}close"
+enddef
+
 export def NextError()
     # Search for python error
     var rxError = '^.\{-}:\d\+\(:\d\+:\?\)\?'
