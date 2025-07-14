@@ -135,6 +135,10 @@ Options, Variables
   Add empty line followed by "Exit code: X" line to the end of ``[shout]`` buffer if set to ``true``:
   Default is ``true``.
 
+``g:shout_cursorline``
+  Enable `CursorLine` in ``[shout]`` buffer if set to ``true``.
+  Default is ``true``.
+
 ``b:shout_exit_code``
   Buffer local varibale. Contains exit code of the latest executed command.
   Could be useful in custom statuslines.

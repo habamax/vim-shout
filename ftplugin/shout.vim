@@ -6,15 +6,7 @@ endif
 
 b:did_ftplugin = 1
 
-setl cursorline
-setl cursorlineopt=both
-setl bufhidden=hide
-setl buftype=nofile
-setl buflisted
-setl noswapfile
-setl noundofile
-
-b:undo_ftplugin = 'setl cursorline< cursorlineopt< bufhidden< buftype< buflisted< swapfile< undofile<'
+b:undo_ftplugin = 'setl bufhidden< buftype< buflisted< swapfile< undofile<'
 b:undo_ftplugin ..= '| exe "nunmap <buffer> <cr>"'
 b:undo_ftplugin ..= '| exe "nunmap <buffer> <C-c>"'
 b:undo_ftplugin ..= '| exe "nunmap <buffer> ]]"'
@@ -22,6 +14,17 @@ b:undo_ftplugin ..= '| exe "nunmap <buffer> [["'
 b:undo_ftplugin ..= '| exe "nunmap <buffer> ]}"'
 b:undo_ftplugin ..= '| exe "nunmap <buffer> [{"'
 b:undo_ftplugin ..= '| exe "nunmap <buffer> gq"'
+
+if get(g:, "shout_cursorline", true)
+    setl cursorline cursorlineopt=both
+    b:undo_ftplugin ..= '| setl nocursorline< nocursorlineopt<'
+endif
+
+setl bufhidden=hide
+setl buftype=nofile
+setl buflisted
+setl noswapfile
+setl noundofile
 
 import autoload 'shout.vim'
 
