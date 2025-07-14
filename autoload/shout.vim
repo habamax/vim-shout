@@ -5,13 +5,12 @@ const W_THRESHOLD = 160
 var shout_job: job
 
 def Vertical(): string
-    var result = ""
     # if the overall vim width is too narrow or
     # there are >=2 vertical windows, split below
     if &columns >= W_THRESHOLD && winlayout()[0] != 'row'
-        result ..= "vertical"
+        return "vertical"
     endif
-    return result
+    return ""
 enddef
 
 def FindOtherWin(): number
@@ -41,30 +40,33 @@ def PrepareBuffer(shell_cwd: string): number
     var buffers = getbufinfo()->filter((_, v) => fnamemodify(v.name, ":t") == bufname)
 
     var bufnr = -1
+    var initial_winid = win_getid()
 
     if len(buffers) > 0
         bufnr = buffers[0].bufnr
+        var windows = win_findbuf(bufnr)
+        if windows->len() > 0
+            win_gotoid(windows[0])
+        else
+            exe $"botright {Vertical()} sbuffer {bufnr}"
+        endif
     else
-        bufnr = bufadd(bufname)
+        exe $"botright {Vertical()} new"
+        exe $"file {bufname}"
+        bufnr = bufnr()
     endif
 
-    var windows = win_findbuf(bufnr)
-    var initial_winid = win_getid()
-
-    if windows->len() == 0
-        exe "botright" Vertical() "sbuffer" bufnr
-        b:shout_initial_winid = initial_winid
-        setl filetype=shout
-    else
-        win_gotoid(windows[0])
-    endif
+    b:shout_initial_winid = initial_winid
 
     silent :%d _
 
+    setl filetype=shout
+    setl undolevels=-1
+
+    clearjumps
+
     b:shout_cwd = shell_cwd
     exe "silent lcd" shell_cwd
-
-    setl undolevels=-1
 
     return bufnr
 enddef
