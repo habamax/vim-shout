@@ -17,7 +17,7 @@ b:undo_ftplugin ..= '| exe "nunmap <buffer> gq"'
 
 if get(g:, "shout_cursorline", true)
     setl cursorline cursorlineopt=both
-    b:undo_ftplugin ..= '| setl nocursorline< nocursorlineopt<'
+    b:undo_ftplugin ..= '| setl cursorline< cursorlineopt<'
 endif
 
 setl bufhidden=hide
