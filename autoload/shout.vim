@@ -125,7 +125,7 @@ export def CaptureOutput(command: string, follow: bool = false)
     endif
 enddef
 
-export def OpenFile()
+export def OpenFile(jump_back: bool = false)
     var shout_cwd = get(b:, "shout_cwd", "")
     if !empty(shout_cwd)
         exe "silent lcd" b:shout_cwd
@@ -211,6 +211,9 @@ export def OpenFile()
                 exe $"normal! {fname[3]->str2nr() - 1}l"
             endif
             normal! zz
+            if jump_back
+                wincmd p
+            endif
         catch
         endtry
     endif
