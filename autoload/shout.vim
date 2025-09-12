@@ -142,6 +142,24 @@ export def OpenFile(jump_back: bool = false)
         return
     endif
 
+
+    # make[1]: Entering directory '/home/habamax/prj/vim/src'
+    # make[1]: Leaving directory '/home/habamax/prj/vim/src'
+    var path = ""
+    var linenr = line('.')
+    while linenr > 0
+        var line = getline(linenr)
+        var pathm = line->matchlist('^\s*make\[\d\+\]: Entering directory ''\(\S\+\)''$')
+        if !empty(pathm)
+            path = $"{pathm[1]}/"
+            break
+        endif
+        if line =~ '^\s*make\[\d\+\]: Leaving directory .\{-}$'
+            break
+        endif
+        linenr = prevnonblank(linenr - 1)
+    endwhile
+
     # Windows has : in `isfname` thus for ./filename:20:10: gf can't find filename cause
     # it sees filename:20:10: instead of just filename
     # So the "hack" would be:
@@ -177,11 +195,17 @@ export def OpenFile(jump_back: bool = false)
         fname = getline('.')->matchlist('^\(.\{-}\):.*')
     endif
 
-    if fname->len() > 0 && filereadable(fname[1])
+    if empty(fname)
+        return
+    endif
+
+    var fullname = path .. fname[1]
+    if filereadable(fullname)
         try
             var should_split = false
             var buffers = getbufinfo()->filter((_, v) => v.name == fnamemodify(fname[1], ":p"))
-            fname[1] = fname[1]->substitute('#', '\\&', 'g')
+            # fname[1] = fname[1]->substitute('#', '\\&', 'g')
+            fullname = fullname->substitute('#', '\\&', 'g')
             # goto opened file if it is visible
             if len(buffers) > 0 && len(buffers[0].windows) > 0
                 win_gotoid(buffers[0].windows[0])
@@ -197,9 +221,9 @@ export def OpenFile(jump_back: bool = false)
             exe $"lcd {shout_cwd}"
 
             if should_split
-                exe Vertical() "split" fname[1]
+                exe Vertical() "split" fullname
             else
-                exe "edit" fname[1]
+                exe "edit" fullname
             endif
 
             if !empty(fname[2])
