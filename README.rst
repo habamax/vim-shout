@@ -2,12 +2,8 @@
                                    VIM-SHOUT
 ################################################################################
 
-Run and Capture Shell Command Output
-####################################
-
-.. note::
-
-  Should work with Vim9 (compiled with ``HUGE`` features).
+Run and Capture Shell Command Output With Vim9
+##############################################
 
 
 I always wanted a simpler way to run an arbitrary shell command with the output
